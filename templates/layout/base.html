@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE HTML>
+<html class="no-js" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {# Favicon and Touch Icons #}
+    <link rel="shortcut icon" href="{% static '' %}">
+    {# Font Awesome #}
+    <link rel="stylesheet" href="{% static 'css/all.css' %}">
+    {# Bootstrap #}
+    <link rel="stylesheet" href="{% static 'css/bootswatch.materia.min.css' %}">
+    <script type="text/javascript" src="{% static 'js/jquery-3.5.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    {# Custom #}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {# Lightbox #}
+    <link rel="stylesheet" href="{% static 'css/lightbox.min.css' %}">
+    <title>dj-crud - {% block title %}{% endblock %}</title>
+</head>
+
+{% block page_styles %}{# Page Styles go here #}{% endblock %}
+
+<body>
+
+    {# NavBar #}
+    {% include 'layout/navbar.html' %}
+
+    {% with messages=False %}
+    {% if messages %}
+    {% for category, message in messages %}
+    <div class="alert alert-success alert-dismissible fade show">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <span class=""> message </span>
+    </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block page_content %}{# Page contents go here #}{% endblock %}
+
+</body>
+
+</html>
+
+
+
+{% block page_scripts %}{# Page Scripts go here #}{% endblock %}
