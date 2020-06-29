@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
 from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 
 
 def login(request):
@@ -13,6 +14,8 @@ def login(request):
             return redirect('login')
         auth.login(request, user)
         messages.success(request, 'You are now logged in')
+        if request.GET.get('next'):
+            return redirect(request.GET.get('next'))
         return redirect('dashboard')
 
     return render(request, 'users/login.html')
@@ -52,9 +55,11 @@ def logout(request):
         return redirect('index')
 
 
+@login_required
 def profile(request):
     return render(request, 'users/profile.html')
 
 
+@login_required
 def dashboard(request):
     return render(request, 'users/dashboard.html')
