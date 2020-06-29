@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth, messages
+from django.contrib.auth.models import User
 
 
 def login(request):
@@ -16,11 +17,28 @@ def login(request):
 
 def register(request):
     if request.method == 'POST':
+        username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         confirm_password = request.POST['confirmpassword']
-        print(email, password, confirm_password)
-        return redirect('register')
+
+        if password != confirm_password:
+            messages.error(request, 'Passwords do not match')
+            return redirect('register')
+
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'That username is taken')
+            return redirect('register')
+
+        if User.objects.filter(email=email).exists():
+            messages.error(request, 'That email is being used')
+            return redirect('register')
+
+        user = User.objects.create_user(username=username, password=password, email=email)
+        user.save()
+        messages.success(request, 'You are now registered and can log in')
+        return redirect('login')
+
     return render(request, 'users/register.html')
 
 
