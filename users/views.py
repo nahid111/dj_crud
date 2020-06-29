@@ -5,13 +5,16 @@ from django.contrib.auth.models import User
 
 def login(request):
     if request.method == 'POST':
-        email = request.POST['email']
+        username = request.POST['username']
         password = request.POST['password']
-        messages.error(request, f'{email} {password}')
-        messages.warning(request, f'{email} {password}')
-        messages.success(request, f'{email} {password}')
-        messages.info(request, f'{email} {password}')
-        return redirect('login')
+        user = auth.authenticate(username=username, password=password)
+        if not user:
+            messages.error(request, 'Invalid credentials')
+            return redirect('login')
+        auth.login(request, user)
+        messages.success(request, 'You are now logged in')
+        return redirect('dashboard')
+
     return render(request, 'users/login.html')
 
 
@@ -45,6 +48,7 @@ def register(request):
 def logout(request):
     if request.method == 'POST':
         auth.logout(request)
+        messages.info(request, 'You are now logged out')
         return redirect('index')
 
 

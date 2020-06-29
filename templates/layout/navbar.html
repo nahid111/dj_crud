@@ -18,7 +18,7 @@
             {% if user.is_authenticated %}
             <li class="nav-item dropdown ml-auto">
                 <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                    <img src="https://avatars.dicebear.com/api/bottts/3.svg" style="width: 25px" alt="" /> username
+                    <img src="https://avatars.dicebear.com/api/bottts/3.svg" style="width: 25px" alt="" /> {{user.username}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-right text-center">
                     <a href="{% url 'dashboard' %}" class="dropdown-item">Dashboard</a>
