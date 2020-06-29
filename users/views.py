@@ -1,12 +1,15 @@
 from django.shortcuts import render, redirect
-from django.contrib import auth
+from django.contrib import auth, messages
 
 
 def login(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
-        print(email, password)
+        messages.error(request, f'{email} {password}')
+        messages.warning(request, f'{email} {password}')
+        messages.success(request, f'{email} {password}')
+        messages.info(request, f'{email} {password}')
         return redirect('login')
     return render(request, 'users/login.html')
 
